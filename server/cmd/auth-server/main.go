@@ -17,15 +17,23 @@ import (
 	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/user"
 	manager "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/mysql"
 	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/userpb"
+	"flag"
 )
 
 var db *sql.DB
+
+var (
+	certFile   = flag.String("cert_file", "../certfiles/ssl.crt", "The TLS cert file")
+	keyFile    = flag.String("key_file", "../certfiles/ssl.key", "The TLS key file")
+	jwtPrivateKey = flag.String("jwt_key_file", "../certfiles/jwt-key.pem", "The TLS key file")
+
+)
 
 type config struct {
 	DBHost          string
 	DBPort          string `default:"3306"`
 	DBUsername      string `default:"user-service"`
-	DBPassword      string
+	DBPassword      string `default:"nazgulum"`
 	DBName          string `default:"chat"`
 	TLSCert         string `default:"/etc/auth/cert.pem"`
 	TLSKey          string `default:"/etc/auth/key.pem"`
@@ -45,6 +53,8 @@ func main() {
 
 	var dbError error
 	// Connect to database.
+	fmt.Print(fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", myConfig.DBUsername, myConfig.DBPassword, myConfig.DBHost, myConfig.DBPort, myConfig.DBName))
+
 	db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", myConfig.DBUsername, myConfig.DBPassword, myConfig.DBHost, myConfig.DBPort, myConfig.DBName))
 	if err != nil {
 		log.Printf("[ERROR][auth-server] %v", err)
@@ -62,13 +72,16 @@ func main() {
 	}
 	uM := manager.UserManager{db}
 
-	ta, err := credentials.NewServerTLSFromFile(myConfig.TLSCert, myConfig.TLSKey)
+
+	ta, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
+	//ta, err := credentials.NewServerTLSFromFile(myConfig.TLSCert, myConfig.TLSKey)
 	if err != nil {
 		log.Fatalf("[CRITICAL][auth-server] %v", err)
 	}
 	gs := grpc.NewServer(grpc.Creds(ta))
 
-	key, err := ioutil.ReadFile(myConfig.JWTPrivateKey)
+	//key, err := ioutil.ReadFile(myConfig.JWTPrivateKey)
+	key, err := ioutil.ReadFile(*jwtPrivateKey)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Error reading the jwt private key: %s", err))
 	}
