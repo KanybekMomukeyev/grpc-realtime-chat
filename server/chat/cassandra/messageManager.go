@@ -6,7 +6,7 @@ import (
 
 	"github.com/gocql/gocql"
 	"github.com/golang/protobuf/ptypes/timestamp"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/chat/chatpb"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat/chatpb"
 	"github.com/pkg/errors"
 )
 

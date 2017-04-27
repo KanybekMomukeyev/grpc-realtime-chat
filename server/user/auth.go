@@ -6,7 +6,7 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/user/userpb"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/userpb"
 	"github.com/pkg/errors"
 	"github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"

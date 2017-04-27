@@ -2,7 +2,7 @@ package cassandra
 
 import (
 	"github.com/gocql/gocql"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/chat/chatpb"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat/chatpb"
 	"github.com/pkg/errors"
 )
 

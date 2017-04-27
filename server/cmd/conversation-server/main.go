@@ -12,9 +12,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/leandro-lugaresi/grpc-realtime-chat/server/chat"
-	manager "github.com/leandro-lugaresi/grpc-realtime-chat/server/chat/cassandra"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/chat/chatpb"
+	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat"
+	manager "github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat/cassandra"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat/chatpb"
 )
 
 var db *sql.DB

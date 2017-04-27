@@ -6,7 +6,7 @@ import (
 
 	"fmt"
 
-	"github.com/leandro-lugaresi/grpc-realtime-chat/server/user"
+	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/user"
 )
 
 type UserManager struct {

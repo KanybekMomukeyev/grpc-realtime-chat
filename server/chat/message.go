@@ -7,8 +7,8 @@ import (
 
 	jwt "github.com/dgrijalva/jwt-go"
 	google_protobuf "github.com/golang/protobuf/ptypes/empty"
-	"github.com/leandro-lugaresi/grpc-realtime-chat/server/auth"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/chat/chatpb"
+	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/auth"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/chat/chatpb"
 	"github.com/nats-io/nats"
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"

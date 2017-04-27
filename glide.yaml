@@ -1,4 +1,4 @@
-package: github.com/leandro-lugaresi/grpc-realtime-chat
+package: github.com/KanybekMomukeyev/grpc-realtime-chat
 import:
 - package: github.com/golang/protobuf
   subpackages:

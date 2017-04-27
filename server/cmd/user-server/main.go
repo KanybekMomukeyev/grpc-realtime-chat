@@ -14,9 +14,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
-	"github.com/leandro-lugaresi/grpc-realtime-chat/server/user"
-	manager "github.com/leandro-lugaresi/grpc-realtime-chat/server/user/mysql"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/user/userpb"
+	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/user"
+	manager "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/mysql"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/userpb"
 )
 
 var db *sql.DB

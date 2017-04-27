@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/leandro-lugaresi/grpc-realtime-chat/server/user"
-	pb "github.com/leandro-lugaresi/grpc-realtime-chat/server/user/userpb"
+	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/user"
+	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/userpb"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
