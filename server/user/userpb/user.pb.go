@@ -53,6 +53,34 @@ func (m *User) String() string            { return proto.CompactTextString(m) }
 func (*User) ProtoMessage()               {}
 func (*User) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
+func (m *User) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *User) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *User) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *User) GetPhoto() []byte {
+	if m != nil {
+		return m.Photo
+	}
+	return nil
+}
+
 type SignUpRequest struct {
 	Name     string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
 	Username string `protobuf:"bytes,2,opt,name=username" json:"username,omitempty"`
@@ -65,6 +93,34 @@ func (m *SignUpRequest) String() string            { return proto.CompactTextStr
 func (*SignUpRequest) ProtoMessage()               {}
 func (*SignUpRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
+func (m *SignUpRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *SignUpRequest) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *SignUpRequest) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
+
+func (m *SignUpRequest) GetPhoto() []byte {
+	if m != nil {
+		return m.Photo
+	}
+	return nil
+}
+
 type Token struct {
 	Token string `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
 }
@@ -73,6 +129,13 @@ func (m *Token) Reset()                    { *m = Token{} }
 func (m *Token) String() string            { return proto.CompactTextString(m) }
 func (*Token) ProtoMessage()               {}
 func (*Token) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
+
+func (m *Token) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
 
 type SignInRequest struct {
 	Username string `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
@@ -83,6 +146,20 @@ func (m *SignInRequest) Reset()                    { *m = SignInRequest{} }
 func (m *SignInRequest) String() string            { return proto.CompactTextString(m) }
 func (*SignInRequest) ProtoMessage()               {}
 func (*SignInRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
+
+func (m *SignInRequest) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *SignInRequest) GetPassword() string {
+	if m != nil {
+		return m.Password
+	}
+	return ""
+}
 
 type UpdateProfileRequest struct {
 	Username string `protobuf:"bytes,1,opt,name=username" json:"username,omitempty"`
@@ -95,6 +172,27 @@ func (m *UpdateProfileRequest) String() string            { return proto.Compact
 func (*UpdateProfileRequest) ProtoMessage()               {}
 func (*UpdateProfileRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
 
+func (m *UpdateProfileRequest) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+func (m *UpdateProfileRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *UpdateProfileRequest) GetPhoto() []byte {
+	if m != nil {
+		return m.Photo
+	}
+	return nil
+}
+
 type GetUsersRequest struct {
 	Ids      []string `protobuf:"bytes,1,rep,name=ids" json:"ids,omitempty"`
 	Name     string   `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
@@ -105,6 +203,27 @@ func (m *GetUsersRequest) Reset()                    { *m = GetUsersRequest{} }
 func (m *GetUsersRequest) String() string            { return proto.CompactTextString(m) }
 func (*GetUsersRequest) ProtoMessage()               {}
 func (*GetUsersRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+
+func (m *GetUsersRequest) GetIds() []string {
+	if m != nil {
+		return m.Ids
+	}
+	return nil
+}
+
+func (m *GetUsersRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GetUsersRequest) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
 
 type GetUsersResponse struct {
 	Users []*User `protobuf:"bytes,1,rep,name=users" json:"users,omitempty"`
@@ -132,6 +251,20 @@ func (m *ChangePasswordRequest) String() string            { return proto.Compac
 func (*ChangePasswordRequest) ProtoMessage()               {}
 func (*ChangePasswordRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
 
+func (m *ChangePasswordRequest) GetOldPassword() string {
+	if m != nil {
+		return m.OldPassword
+	}
+	return ""
+}
+
+func (m *ChangePasswordRequest) GetNewPassword() string {
+	if m != nil {
+		return m.NewPassword
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*User)(nil), "userpb.User")
 	proto.RegisterType((*SignUpRequest)(nil), "userpb.SignUpRequest")
@@ -149,7 +282,7 @@ var _ grpc.ClientConn
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion3
+const _ = grpc.SupportPackageIsVersion4
 
 // Client API for AuthService service
 
@@ -245,13 +378,14 @@ var _AuthService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptor0,
+	Metadata: "user.proto",
 }
 
 // Client API for UserService service
 
 type UserServiceClient interface {
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*google_protobuf.Empty, error)
+	// Get Users by id or find users by username or name
 	GetUsers(ctx context.Context, in *GetUsersRequest, opts ...grpc.CallOption) (*GetUsersResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*google_protobuf.Empty, error)
 }
@@ -295,6 +429,7 @@ func (c *userServiceClient) ChangePassword(ctx context.Context, in *ChangePasswo
 
 type UserServiceServer interface {
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*google_protobuf.Empty, error)
+	// Get Users by id or find users by username or name
 	GetUsers(context.Context, *GetUsersRequest) (*GetUsersResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*google_protobuf.Empty, error)
 }
@@ -375,7 +510,7 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptor0,
+	Metadata: "user.proto",
 }
 
 func init() { proto.RegisterFile("user.proto", fileDescriptor0) }

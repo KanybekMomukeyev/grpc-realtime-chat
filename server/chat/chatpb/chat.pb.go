@@ -154,6 +154,41 @@ func (m *Conversation) String() string            { return proto.CompactTextStri
 func (*Conversation) ProtoMessage()               {}
 func (*Conversation) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
+func (m *Conversation) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Conversation) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *Conversation) GetType() Conversation_ConversationType {
+	if m != nil {
+		return m.Type
+	}
+	return Conversation_INDIVIDUAL
+}
+
+func (m *Conversation) GetMemberIds() []string {
+	if m != nil {
+		return m.MemberIds
+	}
+	return nil
+}
+
+func (m *Conversation) GetImage() []byte {
+	if m != nil {
+		return m.Image
+	}
+	return nil
+}
+
 func (m *Conversation) GetCreationTime() *google_protobuf1.Timestamp {
 	if m != nil {
 		return m.CreationTime
@@ -213,6 +248,20 @@ func (m *Message) GetContent() isMessage_Content {
 		return m.Content
 	}
 	return nil
+}
+
+func (m *Message) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *Message) GetSenderId() string {
+	if m != nil {
+		return m.SenderId
+	}
+	return ""
 }
 
 func (m *Message) GetEvent() *ActionEvent {
@@ -370,6 +419,13 @@ func (m *ActionEvent) String() string            { return proto.CompactTextStrin
 func (*ActionEvent) ProtoMessage()               {}
 func (*ActionEvent) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
 
+func (m *ActionEvent) GetEvent() ActionEvent_EventType {
+	if m != nil {
+		return m.Event
+	}
+	return ActionEvent_CREATED_GROUP
+}
+
 func (m *ActionEvent) GetExtraParams() map[string]string {
 	if m != nil {
 		return m.ExtraParams
@@ -387,6 +443,20 @@ func (m *TypingMessage) String() string            { return proto.CompactTextStr
 func (*TypingMessage) ProtoMessage()               {}
 func (*TypingMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{3} }
 
+func (m *TypingMessage) GetSenderId() string {
+	if m != nil {
+		return m.SenderId
+	}
+	return ""
+}
+
+func (m *TypingMessage) GetType() TypingMessage_ActionType {
+	if m != nil {
+		return m.Type
+	}
+	return TypingMessage_CANCEL_TYPING
+}
+
 type CreateConversationRequest struct {
 	Title     string                        `protobuf:"bytes,1,opt,name=title" json:"title,omitempty"`
 	Type      Conversation_ConversationType `protobuf:"varint,2,opt,name=type,enum=chatpb.Conversation_ConversationType" json:"type,omitempty"`
@@ -398,6 +468,34 @@ func (m *CreateConversationRequest) Reset()                    { *m = CreateConv
 func (m *CreateConversationRequest) String() string            { return proto.CompactTextString(m) }
 func (*CreateConversationRequest) ProtoMessage()               {}
 func (*CreateConversationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+
+func (m *CreateConversationRequest) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *CreateConversationRequest) GetType() Conversation_ConversationType {
+	if m != nil {
+		return m.Type
+	}
+	return Conversation_INDIVIDUAL
+}
+
+func (m *CreateConversationRequest) GetMemberIds() []string {
+	if m != nil {
+		return m.MemberIds
+	}
+	return nil
+}
+
+func (m *CreateConversationRequest) GetImage() []byte {
+	if m != nil {
+		return m.Image
+	}
+	return nil
+}
 
 type CreateConversationResponse struct {
 	Conversation *Conversation `protobuf:"bytes,1,opt,name=conversation" json:"conversation,omitempty"`
@@ -426,6 +524,27 @@ func (m *GetConversationsRequest) String() string            { return proto.Comp
 func (*GetConversationsRequest) ProtoMessage()               {}
 func (*GetConversationsRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
 
+func (m *GetConversationsRequest) GetLimit() int32 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+func (m *GetConversationsRequest) GetOffset() int32 {
+	if m != nil {
+		return m.Offset
+	}
+	return 0
+}
+
+func (m *GetConversationsRequest) GetId() []string {
+	if m != nil {
+		return m.Id
+	}
+	return nil
+}
+
 type GetConversationsResponse struct {
 	Conversations []*Conversation `protobuf:"bytes,1,rep,name=conversations" json:"conversations,omitempty"`
 }
@@ -451,6 +570,13 @@ func (m *LeaveConversationRequest) String() string            { return proto.Com
 func (*LeaveConversationRequest) ProtoMessage()               {}
 func (*LeaveConversationRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
 
+func (m *LeaveConversationRequest) GetConversationId() string {
+	if m != nil {
+		return m.ConversationId
+	}
+	return ""
+}
+
 type MemberRequest struct {
 	ConversationId string `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId" json:"conversation_id,omitempty"`
 	UserId         string `protobuf:"bytes,2,opt,name=user_id,json=userId" json:"user_id,omitempty"`
@@ -460,6 +586,20 @@ func (m *MemberRequest) Reset()                    { *m = MemberRequest{} }
 func (m *MemberRequest) String() string            { return proto.CompactTextString(m) }
 func (*MemberRequest) ProtoMessage()               {}
 func (*MemberRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+
+func (m *MemberRequest) GetConversationId() string {
+	if m != nil {
+		return m.ConversationId
+	}
+	return ""
+}
+
+func (m *MemberRequest) GetUserId() string {
+	if m != nil {
+		return m.UserId
+	}
+	return ""
+}
 
 type ChatMessage struct {
 	ConversationId string `protobuf:"bytes,1,opt,name=conversation_id,json=conversationId" json:"conversation_id,omitempty"`
@@ -493,6 +633,13 @@ func (m *ChatMessage) GetContent() isChatMessage_Content {
 		return m.Content
 	}
 	return nil
+}
+
+func (m *ChatMessage) GetConversationId() string {
+	if m != nil {
+		return m.ConversationId
+	}
+	return ""
 }
 
 func (m *ChatMessage) GetTyping() *TypingMessage {
@@ -594,6 +741,27 @@ func (m *GetHistoryRequest) String() string            { return proto.CompactTex
 func (*GetHistoryRequest) ProtoMessage()               {}
 func (*GetHistoryRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
 
+func (m *GetHistoryRequest) GetLimit() int32 {
+	if m != nil {
+		return m.Limit
+	}
+	return 0
+}
+
+func (m *GetHistoryRequest) GetOffset() int32 {
+	if m != nil {
+		return m.Offset
+	}
+	return 0
+}
+
+func (m *GetHistoryRequest) GetConversationId() string {
+	if m != nil {
+		return m.ConversationId
+	}
+	return ""
+}
+
 type GetHistoryResponse struct {
 	Messages []*Message `protobuf:"bytes,1,rep,name=messages" json:"messages,omitempty"`
 }
@@ -619,6 +787,20 @@ func (m *ReadHistoryRequest) Reset()                    { *m = ReadHistoryReques
 func (m *ReadHistoryRequest) String() string            { return proto.CompactTextString(m) }
 func (*ReadHistoryRequest) ProtoMessage()               {}
 func (*ReadHistoryRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+
+func (m *ReadHistoryRequest) GetLastMessageId() string {
+	if m != nil {
+		return m.LastMessageId
+	}
+	return ""
+}
+
+func (m *ReadHistoryRequest) GetConversationId() string {
+	if m != nil {
+		return m.ConversationId
+	}
+	return ""
+}
 
 func init() {
 	proto.RegisterType((*Conversation)(nil), "chatpb.Conversation")
@@ -646,7 +828,7 @@ var _ grpc.ClientConn
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion3
+const _ = grpc.SupportPackageIsVersion4
 
 // Client API for MessageService service
 
@@ -814,7 +996,7 @@ var _MessageService_serviceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: fileDescriptor0,
+	Metadata: "chat.proto",
 }
 
 // Client API for ConversationService service
@@ -1012,7 +1194,7 @@ var _ConversationService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: fileDescriptor0,
+	Metadata: "chat.proto",
 }
 
 func init() { proto.RegisterFile("chat.proto", fileDescriptor0) }
