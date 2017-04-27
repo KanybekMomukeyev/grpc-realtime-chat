@@ -26,7 +26,6 @@ var (
 	certFile   = flag.String("cert_file", "../certfiles/ssl.crt", "The TLS cert file")
 	keyFile    = flag.String("key_file", "../certfiles/ssl.key", "The TLS key file")
 	jwtPrivateKey = flag.String("jwt_key_file", "../certfiles/jwt-key.pem", "The TLS key file")
-
 )
 
 type config struct {

@@ -17,19 +17,26 @@ import (
 	"github.com/KanybekMomukeyev/grpc-realtime-chat/server/user"
 	manager "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/mysql"
 	pb "github.com/KanybekMomukeyev/grpc-realtime-chat/server/user/userpb"
+	"flag"
 )
 
 var db *sql.DB
+
+var (
+	certFile   = flag.String("cert_file", "../certfiles/ssl.crt", "The TLS cert file")
+	keyFile    = flag.String("key_file", "../certfiles/ssl.key", "The TLS key file")
+	jwtPrivateKey = flag.String("jwt_key_file", "../certfiles/jwt-key.pem", "The TLS key file")
+)
 
 type config struct {
 	DBHost          string
 	DBPort          string `default:"3306"`
 	DBUsername      string `default:"user-service"`
-	DBPassword      string
+	DBPassword      string `default:"nazgulum"`
 	DBName          string `default:"chat"`
-	TLSCert         string `default:"/etc/auth/cert.pem"`
-	TLSKey          string `default:"/etc/auth/key.pem"`
-	JWTPrivateKey   string `default:"/etc/auth/jwt-key.pem"`
+	//TLSCert         string `default:"/etc/auth/cert.pem"`
+	//TLSKey          string `default:"/etc/auth/key.pem"`
+	//JWTPrivateKey   string `default:"/etc/auth/jwt-key.pem"`
 	MaxAttempts     int    `default:"20"`
 	ListenAddr      string `default:"127.0.0.1:7400"`
 	DebugListenAddr string `default:"127.0.0.1:7401"`
@@ -62,13 +69,15 @@ func main() {
 	}
 	uM := manager.UserManager{db}
 
-	ta, err := credentials.NewServerTLSFromFile(c.TLSCert, c.TLSKey)
+	ta, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
+	//ta, err := credentials.NewServerTLSFromFile(c.TLSCert, c.TLSKey)
 	if err != nil {
 		log.Fatalf("[CRITICAL][user-server] %v", err)
 	}
 	gs := grpc.NewServer(grpc.Creds(ta))
 
-	key, err := ioutil.ReadFile(c.JWTPrivateKey)
+	key, err := ioutil.ReadFile(*jwtPrivateKey)
+	//key, err := ioutil.ReadFile(c.JWTPrivateKey)
 	if err != nil {
 		log.Fatalf("[CRITICAL][user-server] Error reading the jwt private key: %s", err)
 	}
