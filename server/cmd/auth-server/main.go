@@ -36,8 +36,8 @@ type config struct {
 }
 
 func main() {
-	var c config
-	err := envconfig.Process("AUTH", &c)
+	var myConfig config
+	err := envconfig.Process("AUTH", &myConfig)
 	if err != nil {
 		log.Fatalf("[CRITICAL][auth-server] Could not process the config enviromment: %v", err)
 	}
@@ -45,11 +45,11 @@ func main() {
 
 	var dbError error
 	// Connect to database.
-	db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", c.DBUsername, c.DBPassword, c.DBHost, c.DBPort, c.DBName))
+	db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", myConfig.DBUsername, myConfig.DBPassword, myConfig.DBHost, myConfig.DBPort, myConfig.DBName))
 	if err != nil {
 		log.Printf("[ERROR][auth-server] %v", err)
 	}
-	for attempts := 1; attempts < c.MaxAttempts; attempts++ {
+	for attempts := 1; attempts < myConfig.MaxAttempts; attempts++ {
 		dbError = db.Ping()
 		if dbError == nil {
 			break
@@ -62,13 +62,13 @@ func main() {
 	}
 	uM := manager.UserManager{db}
 
-	ta, err := credentials.NewServerTLSFromFile(c.TLSCert, c.TLSKey)
+	ta, err := credentials.NewServerTLSFromFile(myConfig.TLSCert, myConfig.TLSKey)
 	if err != nil {
 		log.Fatalf("[CRITICAL][auth-server] %v", err)
 	}
 	gs := grpc.NewServer(grpc.Creds(ta))
 
-	key, err := ioutil.ReadFile(c.JWTPrivateKey)
+	key, err := ioutil.ReadFile(myConfig.JWTPrivateKey)
 	if err != nil {
 		log.Fatal(fmt.Errorf("Error reading the jwt private key: %s", err))
 	}
@@ -78,12 +78,12 @@ func main() {
 	}
 	pb.RegisterAuthServiceServer(gs, as)
 
-	ln, err := net.Listen("tcp", c.ListenAddr)
+	ln, err := net.Listen("tcp", myConfig.ListenAddr)
 	if err != nil {
 		log.Fatalf("[CRITICAL][auth-server] %v", err)
 	}
 	go gs.Serve(ln)
 
 	log.Println("Auth service started successfully.")
-	log.Fatal(http.ListenAndServe(c.DebugListenAddr, nil))
+	log.Fatal(http.ListenAndServe(myConfig.DebugListenAddr, nil))
 }
