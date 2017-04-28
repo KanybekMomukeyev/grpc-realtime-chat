@@ -58,7 +58,7 @@ func main() {
 
 	natsConnect, _ := nats.Connect(c.NatsAddress)
 	encodedConn, _ := nats.NewEncodedConn(natsConnect, natsp.PROTOBUF_ENCODER)
-	defer ec.Close()
+	defer encodedConn.Close()
 
 	ta, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
 	//ta, err := credentials.NewServerTLSFromFile(c.TLSCert, c.TLSKey)
