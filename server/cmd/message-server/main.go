@@ -22,11 +22,11 @@ import (
 var (
 	certFile   = flag.String("cert_file", "../certfiles/ssl.crt", "The TLS cert file")
 	keyFile    = flag.String("key_file", "../certfiles/ssl.key", "The TLS key file")
-	jwtPrivateKey = flag.String("jwt_key_file", "../certfiles/jwt-key.pem", "The TLS key file")
+	jwtPrivateKey = flag.String("jwt_key_file", "../certfiles/jwt.pem", "The TLS key file")
 )
 
 type config struct {
-	DBCluster       []string
+	DBCluster       []string `default:"127.0.0.1"`
 	DBKeyspace      string `default:"chat"`
 	NatsAddress     string `default:"nats://nats:4222"`
 	//TLSCert         string `default:"/etc/auth/cert.pem"`
