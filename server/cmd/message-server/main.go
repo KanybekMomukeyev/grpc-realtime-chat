@@ -56,8 +56,8 @@ func main() {
 	cM := manager.ConversationManager{Session: session}
 	mM := manager.MessageManager{Session: session}
 
-	nc, _ := nats.Connect(c.NatsAddress)
-	ec, _ := nats.NewEncodedConn(nc, natsp.PROTOBUF_ENCODER)
+	natsConnect, _ := nats.Connect(c.NatsAddress)
+	encodedConn, _ := nats.NewEncodedConn(natsConnect, natsp.PROTOBUF_ENCODER)
 	defer ec.Close()
 
 	ta, err := credentials.NewServerTLSFromFile(*certFile, *keyFile)
@@ -72,7 +72,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("[CRITICAL][message-server] Error reading the jwt private key: %s", err)
 	}
-	cS, err := chat.NewMessageService(key, mM, cM, ec)
+	cS, err := chat.NewMessageService(key, mM, cM, encodedConn)
 	if err != nil {
 		log.Fatalf("[CRITICAL][message-server] %v", err)
 	}
